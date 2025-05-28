@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
 
-const ToDoList = () => {
+const ToDoList = ({navigation}) => {
 
     const todoData = [
         { id: 1, title: "Buy groceries", priority: "urgent", date: "2025-10-01" },

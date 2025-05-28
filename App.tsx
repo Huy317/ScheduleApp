@@ -4,6 +4,7 @@ import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from "react-n
 import ToDoList from './src/ToDoScreen/ToDoList';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AddToDo from './src/ToDoScreen/AddToDo';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -19,20 +20,23 @@ const TodoScreen = () => {
         },
       }}
     >
-      <Stack.Screen name="ToDo List" component={ToDoList} 
-        options={{
+      <Stack.Screen name="ToDo List" component={ToDoList}
+        options={({ navigation }) => ({
           headerRight: () => (
             <TouchableOpacity
               style={styles.button}
-              onPress={() => Alert.alert('New Task Button Pressed')}
+              onPress={() => {
+                navigation.navigate('Add Task')
+              }}
             >
               <Text style={styles.newTaskText}>NEW TASK</Text>
             </TouchableOpacity>
-            
+
           ),
-        }}
+        })}
       />
-      
+
+      <Stack.Screen name="Add Task" component={AddToDo} />
     </Stack.Navigator>
   );
 }
@@ -41,22 +45,22 @@ const TestingScreen = () => {
   // Change this to test each screen
   // will be removed and replace with bottom tab navigator later
   // when all screens are ready
-  return(
+  return (
     <TodoScreen />
   )
 }
 
 const App = () => {
   return (
-      <NavigationContainer>
-        <TestingScreen />
-      </NavigationContainer>
-    
+    <NavigationContainer>
+      <TestingScreen />
+    </NavigationContainer>
+
   );
 }
 
 const styles = StyleSheet.create({
-  button:{
+  button: {
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
