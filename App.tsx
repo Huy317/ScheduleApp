@@ -1,13 +1,12 @@
 import './gesture-handler';
 import React from "react";
 import { Text, View } from "react-native";
-import ToDo from './src/ToDoScreen/ToDo';
+import ToDoList from './src/ToDoScreen/ToDoList';
 
 const App = () => {
   return (
-    <View>
-      <ToDo />
-    </View>
+      <ToDoList />
+    
   );
 }
 
