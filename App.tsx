@@ -1,13 +1,69 @@
 import './gesture-handler';
 import React from "react";
-import { Text, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ToDoList from './src/ToDoScreen/ToDoList';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createStackNavigator();
+const TodoScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: 'green', //TODO: Change this to theme color
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <Stack.Screen name="ToDo List" component={ToDoList} 
+        options={{
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => Alert.alert('New Task Button Pressed')}
+            >
+              <Text style={styles.newTaskText}>NEW TASK</Text>
+            </TouchableOpacity>
+            
+          ),
+        }}
+      />
+      
+    </Stack.Navigator>
+  );
+}
+
+const TestingScreen = () => {
+  // Change this to test each screen
+  // will be removed and replace with bottom tab navigator later
+  // when all screens are ready
+  return(
+    <TodoScreen />
+  )
+}
 
 const App = () => {
   return (
-      <ToDoList />
+      <NavigationContainer>
+        <TestingScreen />
+      </NavigationContainer>
     
   );
 }
 
+const styles = StyleSheet.create({
+  button:{
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  newTaskText: {
+    color: 'white',
+    fontWeight: 'bold',
+  }
+})
 export default App;
