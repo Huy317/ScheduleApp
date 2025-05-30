@@ -12,10 +12,10 @@ const AddToDo = ({ navigation }) => {
 
     const handleAddTask = () => {
         if (title.trim() === "") {
-            Alert.alert("Error");
+            Alert.alert("Error", "Title cannot be empty");
             return;
         }
-        
+
         const newTask = {
             title: title.trim(),
             description: description.trim(),
@@ -43,11 +43,35 @@ const AddToDo = ({ navigation }) => {
                 onChangeText={setDescription}
             />
             <Text style={styles.label}>Date</Text>
-            <DatePicker
+            <View style={styles.center}>
+                <DatePicker
                 date={date}
                 onDateChange={setDate}
-            />
+                />
+            </View>
             
+            <Text style={styles.label}>Priority</Text>
+            <View style={styles.priorityContainer}>
+                <TouchableOpacity
+                    onPress={() => setPriority("urgent")}
+                    style={styles.priorityBox}
+                >
+                    <Text
+                        style={[{ color: priority === "urgent" ? "red" : "grey" }, styles.priorityText]}>Urgent</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => setPriority("normal")}
+                    style={styles.priorityBox}
+                >
+                    <Text style={[{ color: priority === "normal" ? "orange" : "grey" }, styles.priorityText]}>Normal</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => setPriority("low")}
+                    style={styles.priorityBox}
+                >
+                    <Text style={[{ color: priority === "low" ? "green" : "grey" }, styles.priorityText]}>Low</Text>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
@@ -64,6 +88,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
+    },
+    center: {
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 15,
     },
     label: {
         fontSize: 16,
@@ -88,6 +117,19 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
+    
+    priorityContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginBottom: 15,
+    },
+    priorityText: {
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    priorityBox: {
+        padding: 10,
+    }
 })
 
 export default AddToDo;

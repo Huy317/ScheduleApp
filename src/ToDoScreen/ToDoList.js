@@ -48,12 +48,15 @@ const ToDoList = ({navigation}) => {
     }
     
     const fetchData = () => {
-        let userData = storage.getString("userData");
+        // For when we add profile changing, Uncomment when added vvvv
+        // let profile = storage.getString("currentProfile");
+        let profile = "defaultProfile";
+        let userData = storage.getString(profile); 
         if (userData) {
             setData(JSON.parse(userData));
             console.log("User data fetched successfully:", data);
         } else {
-            storage.set("userData", JSON.stringify([]));
+            storage.set(profile, JSON.stringify([]));
             console.log("No user data found, initializing with empty array.");
         }
     }
