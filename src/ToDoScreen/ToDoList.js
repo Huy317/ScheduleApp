@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { use, useCallback, useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from "react-native";
 import { storage } from "../storage";
 
 const ToDoList = ({navigation}) => {
@@ -24,12 +24,15 @@ const ToDoList = ({navigation}) => {
                 return {};
         }
     }
-
+    const handleClick = (item) => {
+        Alert.alert("To-Do Item Selected", `You selected: ${item.title}`);
+        
+    }
     const todoItem = (item) => {
         return (
             <TouchableOpacity
                 style={styles.item}
-                onPress={() => console.log(`Selected: ${item.title}`)}
+                onPress={() => handleClick(item)}
             >
                 <View style={styles.textSide}>
                     <Text style={styles.title}>{item.title}</Text>

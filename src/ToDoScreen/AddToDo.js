@@ -1,26 +1,36 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import DatePicker from "react-native-date-picker";
 
 
-const AddToDo = ({navigation}) => {
+const AddToDo = ({ navigation }) => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [date, setDate] = useState(new Date());
+    const [priority, setPriority] = useState("normal");
 
     const handleAddTask = () => {
-        if (title.trim() === ""){
-            Alert.alert("Error", "Title cannot be empty");
+        if (title.trim() === "") {
+            Alert.alert("Error");
             return;
         }
-        console.log("Task Added:", { title, description });
+        
+        const newTask = {
+            title: title.trim(),
+            description: description.trim(),
+            date: date.toISOString(),
+            priority: priority,
+        }
+        console.log("Task Added:", newTask);
         navigation.goBack();
     }
 
-    return(
+    return (
         <View style={styles.container}>
             <Text style={styles.label}>Title</Text>
-            <TextInput 
-                placeholder="Task Title" 
+            <TextInput
+                placeholder="Task Title"
                 style={styles.input}
                 onChangeText={setTitle}
             />
@@ -32,7 +42,12 @@ const AddToDo = ({navigation}) => {
                 style={styles.input}
                 onChangeText={setDescription}
             />
-
+            <Text style={styles.label}>Date</Text>
+            <DatePicker
+                date={date}
+                onDateChange={setDate}
+            />
+            
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
@@ -50,7 +65,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
     },
-    label : {
+    label: {
         fontSize: 16,
         fontWeight: "bold",
         marginBottom: 5,
