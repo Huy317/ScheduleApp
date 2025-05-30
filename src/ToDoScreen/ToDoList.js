@@ -1,8 +1,11 @@
-import React from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { use, useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from "react-native";
+import { storage } from "../storage";
 
 const ToDoList = ({navigation}) => {
-
+    const [data, setData] = useState([]);
+    
     const todoData = [
         { id: 1, title: "Buy groceries", priority: "urgent", date: "2025-10-01" },
         { id: 2, title: "Walk the dog", priority: "normal", date: "2025-10-02" },
@@ -40,7 +43,29 @@ const ToDoList = ({navigation}) => {
 
         )
     }
+    
+    const fetchData = () => {
+        let userData = storage.getString("userData");
+        if (userData) {
+            setData(JSON.parse(userData));
+            console.log("User data fetched successfully:", data);
+        } else {
+            storage.set("userData", JSON.stringify([]));
+            console.log("No user data found, initializing with empty array.");
+        }
+    }
+
+    useFocusEffect(
+        useCallback(()=>{
+        
+            console.log("ToDoList screen focused, fetching data...");
+            fetchData();
+        },[])
+    )
+
     return (
+        
+
         <View style={styles.container}>
             <FlatList
                 data={todoData}
