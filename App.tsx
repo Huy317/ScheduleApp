@@ -5,6 +5,7 @@ import ToDoList from './src/ToDoScreen/ToDoList';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AddToDo from './src/ToDoScreen/AddToDo';
+import AddProfile from './src/ProfileScreen/AddProfile';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -41,12 +42,18 @@ const TodoScreen = () => {
   );
 }
 
+const ProfileScreen = () => {
+  return(
+    <AddProfile />
+  )
+}
+
 const TestingScreen = () => {
   // Change this to test each screen
   // will be removed and replace with bottom tab navigator later
   // when all screens are ready
   return (
-    <TodoScreen />
+    <ProfileScreen />
   )
 }
 
