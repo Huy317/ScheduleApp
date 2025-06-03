@@ -25,8 +25,8 @@ const ToDoList = ({navigation}) => {
         }
     }
     const handleClick = (item) => {
-        Alert.alert("To-Do Item Selected", `You selected: ${item.title}`);
-        
+        // Alert.alert("To-Do Item Selected", `You selected: ${item.title}`);
+        navigation.navigate("Task Details", { todo: item });
     }
     const todoItem = (item) => {
         return (

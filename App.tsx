@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AddToDo from './src/ToDoScreen/AddToDo';
 import Login from './src/LoginRegister/Login';
 import Regsiter from './src/LoginRegister/Register';
+import TodoDetails from './src/ToDoScreen/TodoDetails';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -39,6 +40,7 @@ const TodoScreen = () => {
       />
 
       <Stack.Screen name="Add Task" component={AddToDo} />
+      <Stack.Screen name="Task Details" component={TodoDetails} />
     </Stack.Navigator>
   );
 }
@@ -50,7 +52,7 @@ const TestingScreen = () => {
   // will be removed and replace with bottom tab navigator later
   // when all screens are ready
   return (
-    <Regsiter />
+    <TodoScreen />
   )
 }
 
