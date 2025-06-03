@@ -3,14 +3,21 @@ let profile = storage.getString("currentProfile") -> String of chosen profile fo
 let profileData = storage.getString(profile) -> Return data for that profile
 profileData = JSON.parse(profileData) -> don't forget to parse it
 
-profileData {
-    TodoList{
-            title: String,
-            description: String,
-            date: date.toISOString(),
-            priority: String, -- "urgent","normal","low"
-    },
-    Settings{
-        -- Will add later
-    }
-}
+
+Check AddToDo.js for updated task format
+
+structure of 1 Task
+const newTask = {
+            id: Date.now().toString(), // Unique ID based on current timestamp
+            title: , // String
+            description: , //String
+            date: date.toISOString(), //String
+            done: false, // boolean
+            priority: priority, //String
+            completedDate: "", //String
+        }
+
+user need to store:
+    email
+    password
+    the todo list
