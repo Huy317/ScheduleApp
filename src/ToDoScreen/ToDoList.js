@@ -41,6 +41,7 @@ const ToDoList = ({ navigation }) => {
     }
     const todoItem = (item) => {
         return (
+            
             <TouchableOpacity
                 style={styles.item}
                 onPress={() => handleClick(item)}

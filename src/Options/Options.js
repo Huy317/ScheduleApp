@@ -16,8 +16,12 @@ const Options = ({navigation}) => {
     }
     const handleLogin = () => {
         navigation.navigate("Login");
-        console.log("Navigate to Login Screen");
     }
+    const handleCompletedTasksHistory = () => {
+        // Logic to handle completed tasks history
+        navigation.navigate("Completed Tasks");
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity
@@ -36,6 +40,16 @@ const Options = ({navigation}) => {
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.labelSection}>
+                <Text style={styles.label}>More Options</Text>
+            </View>
+            
+            <TouchableOpacity
+                style={styles.button}
+                onPress={handleCompletedTasksHistory}
+            >
+                <Text style={styles.buttonText}>Completed Tasks History</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -83,9 +97,34 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
     },
+    label:{
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "black",
+    },
+    labelSection: {
+        width: "100%",
+        marginBottom: 10,
+        marginTop: 20,
+    },  
+
     buttonSection:{
         width: "80%",
         alignItems: "center",
         marginBottom: 20,
-    }
+    },
+    button:{
+        width: "100%",
+        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        borderWidth: 1,
+        padding: 10,
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: "#7F55B1",
+        fontSize: 16,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
 })

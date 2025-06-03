@@ -17,8 +17,15 @@ const TodoDetails = ({ route, navigation }) => {
             navigation.goBack();
         }
     }
+    const getDeleteMessage = ()=>{
+        if (todo.done){
+            return "Are you sure you want to delete this task? It will go into Completed Task History";
+        }else{
+            return "This task is not done yet. Are you sure you want to delete it?";
+        }
+    }
     const handleDelete = () => {
-        Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
+        Alert.alert("Delete Task", getDeleteMessage(), [
             
             {
                 text: "Delete",

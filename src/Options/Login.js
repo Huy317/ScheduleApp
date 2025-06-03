@@ -26,7 +26,7 @@ const Login = ({navigation}) => {
         console.log("Navigate to Register Screen");
     }
     const handleForgotPassword = () => {
-       
+        navigation.navigate("Forgot Password");
         console.log("Navigate to Forgot Password Screen");
     }
     return (
