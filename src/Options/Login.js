@@ -18,6 +18,9 @@ const Login = ({navigation}) => {
         // Reset fields after login attempt
         setEmail("");
         setPassword("");
+
+        //TODO: request API login here
+        
         Alert.alert("Login Successful", "You are now logged in.");
         navigation.goBack();
     }

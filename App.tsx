@@ -13,6 +13,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from '@react-native-vector-icons/material-design-icons';
 import ForgotPassword from './src/Options/ForgotPassword';
 import CompletedList from './src/Options/CompletedList';
+import ResetPassword from './src/Options/ResetPassword';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -67,6 +68,7 @@ const OptionsScreen = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Regsiter} />
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
+      <Stack.Screen name="Reset Password" component={ResetPassword} />
       <Stack.Screen name="Completed Tasks" component={CompletedList} />
     </Stack.Navigator>
   )
