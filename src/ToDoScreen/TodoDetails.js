@@ -98,14 +98,13 @@ const styles = StyleSheet.create({
     priorityBox: {
         justifyContent: "center",
         alignItems: "center",
-        padding: 10,
         borderRadius: 15,
-        minWidth: 80,
+        paddingVertical: 10,
         marginTop: 10,
     },
     markDoneButton: {
         width: "80%",
-        borderColor: "#4CAF50",
+        borderColor: "#328E6E",
         padding: 10,
         borderRadius: 5,
         borderWidth: 2,
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     markDoneButtonText: {
-        color: "#4CAF50",
+        color: "#328E6E",
         fontSize: 16,
         fontWeight: "bold",
     },
@@ -124,7 +123,7 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         width: "80%",
-        borderColor: "red",
+        borderColor: "#FF3F33",
         padding: 10,
         borderRadius: 5,
         borderWidth: 2,
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
         
     },
     deleteButtonText: {
-        color: "red",
+        color: "#FF3F33",
         fontSize: 16,
         fontWeight: "bold",
     },
