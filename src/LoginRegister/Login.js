@@ -10,7 +10,7 @@ const Login = ({ }) => {
             Alert.alert("Input Error", "Email and Password cannot be empty");
             return;
         }
-        if (password.trim().length < 8) {
+        if (password.trim().length < 6) {
             Alert.alert("Password too short", "Password must be at least 6 characters long");
             return;
         }
@@ -32,13 +32,13 @@ const Login = ({ }) => {
             <Text style={styles.appTitle}>Simple Task</Text>
             {/* <Text style={styles.loginText}>Login</Text> */}
             <TextInput
-                placeholder="Email"
+                placeholder="Email*"
                 onChangeText={setEmail}
                 style={styles.input}
                 value={email}
             />
             <TextInput
-                placeholder="Password"
+                placeholder="Password*"
                 secureTextEntry={true}
                 onChangeText={setPassword}
                 style={styles.input}
