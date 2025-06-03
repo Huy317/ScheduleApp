@@ -9,6 +9,8 @@ import Login from './src/Options/Login';
 import Regsiter from './src/Options/Register';
 import TodoDetails from './src/ToDoScreen/TodoDetails';
 import Options from './src/Options/Options';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from '@react-native-vector-icons/material-design-icons';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -62,17 +64,52 @@ const OptionsScreen = () => {
       <Stack.Screen name="Options" component={Options}/>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Regsiter} />
+
     </Stack.Navigator>
   )
 }
 
+const Tab = createBottomTabNavigator();
+
+
+const MainTabNavigator = () => {
+  return(
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#7F55B1',
+          height: 60,
+        },
+        tabBarActiveTintColor: '#fff',
+        tabBarInactiveTintColor: '#ccc',
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'TaskListTab') {
+            iconName = focused ? 'clipboard-list' : 'clipboard-list-outline';
+          } else if (route.name === 'OptionsTab') {
+            iconName = focused ? 'cog' : 'cog-outline';
+          }
+          
+
+          return <Icon name={iconName} size={size} color={color} />;
+        }
+      })}
+    >
+      <Tab.Screen name="TaskListTab" component={TodoScreen} options={{title:"Task List"}}/>
+      <Tab.Screen name="OptionsTab" component={OptionsScreen} options={{title:"Options"}} />
+    </Tab.Navigator>
+  )
+}
 
 const TestingScreen = () => {
   // Change this to test each screen
   // will be removed and replace with bottom tab navigator later
   // when all screens are ready
   return (
-    <OptionsScreen />
+    <MainTabNavigator />
   )
 }
 
