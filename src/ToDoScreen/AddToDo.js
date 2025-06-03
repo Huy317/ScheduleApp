@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import DatePicker from "react-native-date-picker";
+import { storage } from "../storage";
 
 
 const AddToDo = ({ navigation }) => {
@@ -17,12 +18,21 @@ const AddToDo = ({ navigation }) => {
         }
 
         const newTask = {
+            id: Date.now().toString(), // Unique ID based on current timestamp
             title: title.trim(),
             description: description.trim(),
             date: date.toISOString(),
+            done: false,
             priority: priority,
         }
-        console.log("Task Added:", newTask);
+        let userData = storage.getString("userData");
+        if (userData){
+            userData = JSON.parse(userData);
+            userData.push(newTask);
+            storage.set("userData", JSON.stringify(userData));
+            console.log("Task added successfully:", newTask);
+        }
+
         navigation.goBack();
     }
 

@@ -1,14 +1,48 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { storage } from "../storage";
 
-const TodoDetails = ({ route }) => {
+const TodoDetails = ({ route, navigation }) => {
     const { todo } = route.params;
 
     const handleMarkDone = () => {
-
+        todo.done = !todo.done; // Toggle done status
+        let userData = storage.getString("userData");
+        if (userData) {
+            userData = JSON.parse(userData);
+            const updatedData = userData.map(item => 
+                item.id === todo.id ? { ...item, done: todo.done } : item
+            );
+            storage.set("userData", JSON.stringify(updatedData));
+            navigation.goBack();
+        }
     }
     const handleDelete = () => {
+        Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
+            
+            {
+                text: "Delete",
+                onPress: () => {
+                    
+                    let userData = storage.getString("userData");
+                    if (userData) {
+                        userData = JSON.parse(userData);
+                        const updatedData = userData.filter(item => item.id !== todo.id);
+                        storage.set("userData", JSON.stringify(updatedData));
 
+                        // maybe add deleted todo to a trash or history list
+
+                        navigation.goBack();
+                    }
+                    // Alert.alert("Task Deleted", `The task "${todo.title}" has been deleted.`);
+                },
+                style:"destructive"
+            },
+            {
+                text: "Cancel",
+                style: "cancel"
+            },
+        ]);
     }
 
     const getPriorityBackground = (priority) => {
@@ -36,6 +70,17 @@ const TodoDetails = ({ route }) => {
         }
     }
 
+    const getDoneColor = (done) =>{
+        return done ? { color:"orange" } : {color: "#328E6E"};
+    }
+    const getDoneBorder = (done) => {
+        return done ? { borderColor: "orange" } : { borderColor: "#328E6E" };
+    }
+    const getDoneText = (done) => {
+        return done ? "MARK AS UNDONE" : "MARK AS DONE";
+    }
+    
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{todo.title}</Text>
@@ -47,10 +92,10 @@ const TodoDetails = ({ route }) => {
 
             <View style={styles.center}>
                 <TouchableOpacity
-                    style={[styles.markDoneButton]}
+                    style={[styles.markDoneButton, getDoneBorder(todo.done)]}
                     onPress={handleMarkDone}
                 >
-                    <Text style={styles.markDoneButtonText}>MARK AS DONE</Text>
+                    <Text style={[styles.markDoneButtonText,getDoneColor(todo.done)]}>{getDoneText(todo.done)}</Text>
                 </TouchableOpacity>
             </View>
 
