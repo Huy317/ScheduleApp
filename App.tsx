@@ -5,9 +5,10 @@ import ToDoList from './src/ToDoScreen/ToDoList';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AddToDo from './src/ToDoScreen/AddToDo';
-import Login from './src/LoginRegister/Login';
-import Regsiter from './src/LoginRegister/Register';
+import Login from './src/Options/Login';
+import Regsiter from './src/Options/Register';
 import TodoDetails from './src/ToDoScreen/TodoDetails';
+import Options from './src/Options/Options';
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -45,6 +46,25 @@ const TodoScreen = () => {
   );
 }
 
+const OptionsScreen = () => {
+  return(
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#7F55B1',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <Stack.Screen name="Options" component={Options}/>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Regsiter} />
+    </Stack.Navigator>
+  )
+}
 
 
 const TestingScreen = () => {
@@ -52,7 +72,7 @@ const TestingScreen = () => {
   // will be removed and replace with bottom tab navigator later
   // when all screens are ready
   return (
-    <TodoScreen />
+    <OptionsScreen />
   )
 }
 

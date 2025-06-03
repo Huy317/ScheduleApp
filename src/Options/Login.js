@@ -1,38 +1,38 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, View, Text, Alert } from "react-native";
 
-const Regsiter = ({ }) => {
+const Login = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    
-    const handleRegister = () => {
-        if (email.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
-            alert("All fields are required");
-            return;
-        }
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
-        if (password.length < 6) {
-            alert("Password must be at least 6 characters long");
-            return;
-        }
-        console.log("Registration successful with:", { email, password });
-        // Reset fields after registration
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-    }   
 
     const handleLogin = () => {
-        console.log("Navigate to Login Screen");
+        if (email.trim() === "" || password.trim() === "") {
+            Alert.alert("Input Error", "Email and Password cannot be empty");
+            return;
+        }
+        if (password.trim().length < 6) {
+            Alert.alert("Password too short", "Password must be at least 6 characters long");
+            return;
+        }
+        console.log("Login attempted with:", { email, password });
+        // Reset fields after login attempt
+        setEmail("");
+        setPassword("");
+        Alert.alert("Login Successful", "You are now logged in.");
+        navigation.goBack();
+    }
+    const handleRegister = () => {
+        navigation.navigate("Register");
+        console.log("Navigate to Register Screen");
+    }
+    const handleForgotPassword = () => {
+       
+        console.log("Navigate to Forgot Password Screen");
     }
     return (
         <View style={styles.container}>
             <Text style={styles.appTitle}>Simple Task</Text>
-            
+            {/* <Text style={styles.loginText}>Login</Text> */}
             <TextInput
                 placeholder="Email*"
                 onChangeText={setEmail}
@@ -46,34 +46,34 @@ const Regsiter = ({ }) => {
                 style={styles.input}
                 value={password}
             />
-            <TextInput
-                placeholder="Confirm Password*"
-                secureTextEntry={true}
-                onChangeText={setConfirmPassword}
-                style={styles.input}
-                value={confirmPassword}
-            />
             <TouchableOpacity
-                onPress={handleRegister}
+                style={styles.forgotSection}
+                onPress={handleForgotPassword}
+            >
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={handleLogin}
                 style={styles.button}
             >
-                <Text style={styles.buttonText}>Register</Text>
+                <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 
             <View style={styles.registerSection}>
-                <Text style={styles.dontHaveAccountText}>Already have an account?</Text>
+                <Text style={styles.dontHaveAccountText}>Don't have an account?</Text>
                 <TouchableOpacity
-                    onPress={handleLogin}
-
+                    onPress={handleRegister}
+                    
                 >
-                    <Text style={styles.registerText}>   Login</Text>
+                    <Text style={styles.registerText}>   Register</Text>
                 </TouchableOpacity>
             </View>
         </View >
     )
 }
 
-export default Regsiter;
+export default Login;
 const styles = StyleSheet.create({
     container: {
         flex: 1,

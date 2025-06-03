@@ -1,36 +1,40 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View, Text, Alert } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-const Login = ({ }) => {
+const Regsiter = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const handleLogin = () => {
-        if (email.trim() === "" || password.trim() === "") {
-            Alert.alert("Input Error", "Email and Password cannot be empty");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    
+    const handleRegister = () => {
+        if (email.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
+            alert("All fields are required");
             return;
         }
-        if (password.trim().length < 6) {
-            Alert.alert("Password too short", "Password must be at least 6 characters long");
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
             return;
         }
-        console.log("Login attempted with:", { email, password });
-        // Reset fields after login attempt
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long");
+            return;
+        }
+        console.log("Registration successful with:", { email, password });
+        // Reset fields after registration
         setEmail("");
         setPassword("");
-    }
-    const handleRegister = () => {
-        
-        console.log("Navigate to Register Screen");
-    }
-    const handleForgotPassword = () => {
-       
-        console.log("Navigate to Forgot Password Screen");
+        setConfirmPassword("");
+        Alert.alert("Registration Successful", "You can now log in with your credentials.");
+        navigation.goBack();
+    }   
+
+    const handleLogin = () => {
+        navigation.goBack();
     }
     return (
         <View style={styles.container}>
             <Text style={styles.appTitle}>Simple Task</Text>
-            {/* <Text style={styles.loginText}>Login</Text> */}
+            
             <TextInput
                 placeholder="Email*"
                 onChangeText={setEmail}
@@ -44,34 +48,34 @@ const Login = ({ }) => {
                 style={styles.input}
                 value={password}
             />
+            <TextInput
+                placeholder="Confirm Password*"
+                secureTextEntry={true}
+                onChangeText={setConfirmPassword}
+                style={styles.input}
+                value={confirmPassword}
+            />
             <TouchableOpacity
-                style={styles.forgotSection}
-                onPress={handleForgotPassword}
-            >
-                <Text style={styles.forgotText}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                onPress={handleLogin}
+                onPress={handleRegister}
                 style={styles.button}
             >
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
 
             <View style={styles.registerSection}>
-                <Text style={styles.dontHaveAccountText}>Don't have an account?</Text>
+                <Text style={styles.dontHaveAccountText}>Already have an account?</Text>
                 <TouchableOpacity
-                    onPress={handleRegister}
-                    
+                    onPress={handleLogin}
+
                 >
-                    <Text style={styles.registerText}>   Register</Text>
+                    <Text style={styles.registerText}>   Login</Text>
                 </TouchableOpacity>
             </View>
         </View >
     )
 }
 
-export default Login;
+export default Regsiter;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
