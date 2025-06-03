@@ -3,9 +3,9 @@ import { FlatList, StyleSheet, View, Text, TouchableOpacity, Alert } from "react
 
 const CompletedList = ({ navigation }) => {
     const mockData = [
-        { id: "1", title: "Buy groceries", done: false, priority: "urgent", date: "2025-10-01" },
-        { id: "2", title: "Walk the dog", done: true, priority: "normal", date: "2025-10-02" },
-        { id: "3", title: "Finish project report", done: false, priority: "low", date: "2025-10-03" },
+        { id: "1", title: "Buy groceries", done: false, priority: "urgent", date: "2025-10-01", completedDate: "2025-10-01T12:00:00Z" },
+        { id: "2", title: "Walk the dog", done: true, priority: "normal", date: "2025-10-02",completedDate: "2025-10-01T12:00:00Z" },
+        { id: "3", title: "Finish project report", done: false, priority: "low", date: "2025-10-03",completedDate: "2025-10-01T12:00:00Z" },
     ]
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -33,13 +33,20 @@ const CompletedList = ({ navigation }) => {
             }
         ]);
     }
-    const completedItem = ( item ) => {
+    const handleClick = (item) => {
+
+    }
+    const todoItem = (item) => {
+        let completedDate = item.completedDate || "";
         return (
-            <View style={styles.item}>
-                <Text>{item.title}</Text>
-                <Text>{formatDate(item.date)}</Text>
-                <Text>{item.priority}</Text>
-            </View>
+            
+            <TouchableOpacity
+                style={styles.item}
+                onPress={() => handleClick(item)}
+            >
+               <Text style={styles.title}>{item.title}</Text>
+                <Text style={{ fontWeight: "bold" }}>Completed on: <Text style={{ fontWeight: "normal" }}>{formatDate(completedDate)}</Text> </Text>
+            </TouchableOpacity>
         )
     }
     return (
@@ -52,7 +59,7 @@ const CompletedList = ({ navigation }) => {
             </TouchableOpacity>
             <FlatList
                 data={mockData}
-                renderItem={({item}) => completedItem(item)}
+                renderItem={({ item }) => todoItem(item)}
                 keyExtractor={(item) => item.id}
             />
         </View>
@@ -87,5 +94,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "grey",
+        textDecorationLine: "line-through"
+    },
+
 
 })

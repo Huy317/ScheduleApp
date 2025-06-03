@@ -11,7 +11,7 @@ const TodoDetails = ({ route, navigation }) => {
         if (userData) {
             userData = JSON.parse(userData);
             const updatedData = userData.map(item => 
-                item.id === todo.id ? { ...item, done: todo.done } : item
+                item.id === todo.id ? { ...item, done: todo.done, completedDate: todo.done ? new Date().toISOString() : "" } : item
             );
             storage.set("userData", JSON.stringify(updatedData));
             navigation.goBack();
@@ -86,13 +86,16 @@ const TodoDetails = ({ route, navigation }) => {
     const getDoneText = (done) => {
         return done ? "MARK AS UNDONE" : "MARK AS DONE";
     }
-    
+    const getDoneDisplay = (done) =>{
+        return done ? {} : {display: "none"};
+    }
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{todo.title}</Text>
             <Text style={styles.label}>Description:<Text style={{ fontWeight: "normal" }}>{todo.description}</Text> </Text>
             <Text style={styles.label}>Deadline: <Text style={{ fontWeight: "normal" }}>{todo.date}</Text> </Text>
+            <Text style={[getDoneDisplay(todo.done),{fontWeight:"bold"}]}>Completed date: <Text style={{fontWeight:"normal"}}>{todo.completedDate}</Text></Text>
             <View style={[getPriorityBackground(todo.priority), styles.priorityBox]}>
                 <Text style={styles.priorityText}>{todo.priority}</Text>
             </View>

@@ -24,6 +24,7 @@ const AddToDo = ({ navigation }) => {
             date: date.toISOString(),
             done: false,
             priority: priority,
+            completedDate: "",
         }
         let userData = storage.getString("userData");
         if (userData){
