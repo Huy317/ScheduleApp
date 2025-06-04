@@ -1,12 +1,41 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, View, Text, TouchableOpacity, Alert } from "react-native";
+import { storage } from "../storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const CompletedList = ({ navigation }) => {
-    const mockData = [
-        { id: "1", title: "Buy groceries", done: false, priority: "urgent", date: "2025-10-01", completedDate: "2025-10-01T12:00:00Z" },
-        { id: "2", title: "Walk the dog", done: true, priority: "normal", date: "2025-10-02",completedDate: "2025-10-01T12:00:00Z" },
-        { id: "3", title: "Finish project report", done: false, priority: "low", date: "2025-10-03",completedDate: "2025-10-01T12:00:00Z" },
-    ]
+    const [completedTasks, setCompletedTasks] = useState([]);
+    // const mockData = [
+    //     { id: "1", title: "Buy groceries", done: false, priority: "urgent", date: "2025-10-01", completedDate: "2025-10-01T12:00:00Z" },
+    //     { id: "2", title: "Walk the dog", done: true, priority: "normal", date: "2025-10-02", completedDate: "2025-10-01T12:00:00Z" },
+    //     { id: "3", title: "Finish project report", done: false, priority: "low", date: "2025-10-03", completedDate: "2025-10-01T12:00:00Z" },
+    // ]
+
+    const fetchData = () => {
+        let userData = storage.getString("userData");
+        if (userData) {
+
+            userData = JSON.parse(userData);
+            // filter out archived tasks
+            userData = userData.filter(item => item.archived);
+            // sort by completeDate in descending order
+            userData.sort((a, b) => new Date(b.completedDate) - new Date(a.completedDate));
+
+            setCompletedTasks(userData);
+            console.log("User data fetched successfully:", userData);
+        } else {
+            storage.set("userData", JSON.stringify([]));
+            console.log("No user data found, initializing with empty array.");
+        }
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchData();
+        }, [])
+    )
+
+
     const formatDate = (dateString) => {
         if (!dateString) return "";
         const date = new Date(dateString);
@@ -21,8 +50,16 @@ const CompletedList = ({ navigation }) => {
                 text: "Clear",
                 onPress: () => {
                     // Logic to clear all completed tasks
-                    console.log("All completed tasks cleared");
-                    // You might want to update the state or storage here
+                    let userData = storage.getString("userData");
+                    if (userData) {
+                        userData = JSON.parse(userData);
+                        // filter out completed tasks
+                        userData = userData.filter(item => !item.archived);
+                        storage.set("userData", JSON.stringify(userData));
+                        setCompletedTasks([]);
+                        console.log("All completed tasks cleared successfully.");
+                    }
+                    
                     navigation.goBack();
                 },
                 style: "destructive"
@@ -34,17 +71,17 @@ const CompletedList = ({ navigation }) => {
         ]);
     }
     const handleClick = (item) => {
-
+        navigation.navigate("Task Details", { todo: item });
     }
     const todoItem = (item) => {
         let completedDate = item.completedDate || "";
         return (
-            
+
             <TouchableOpacity
                 style={styles.item}
                 onPress={() => handleClick(item)}
             >
-               <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.title}>{item.title}</Text>
                 <Text style={{ fontWeight: "bold" }}>Completed on: <Text style={{ fontWeight: "normal" }}>{formatDate(completedDate)}</Text> </Text>
             </TouchableOpacity>
         )
@@ -58,7 +95,7 @@ const CompletedList = ({ navigation }) => {
                 <Text style={styles.buttonText}>CLEAR ALL</Text>
             </TouchableOpacity>
             <FlatList
-                data={mockData}
+                data={completedTasks}
                 renderItem={({ item }) => todoItem(item)}
                 keyExtractor={(item) => item.id}
             />

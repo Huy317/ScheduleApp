@@ -70,6 +70,7 @@ const OptionsScreen = () => {
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
       <Stack.Screen name="Reset Password" component={ResetPassword} />
       <Stack.Screen name="Completed Tasks" component={CompletedList} />
+      <Stack.Screen name="Task Details" component={TodoDetails} />
     </Stack.Navigator>
   )
 }

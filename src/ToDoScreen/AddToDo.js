@@ -25,6 +25,7 @@ const AddToDo = ({ navigation }) => {
             done: false,
             priority: priority,
             completedDate: "",
+            archived: false,
         }
         let userData = storage.getString("userData");
         if (userData){

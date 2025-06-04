@@ -85,8 +85,11 @@ const ToDoList = ({ navigation }) => {
                 return a.date < b.date?-1:((a.date > b.date) ? 1 : 0);
             });
 
+            // filter out archived tasks
+            userData = userData.filter(item => !item.archived);
+
             setData(userData);
-            console.log("User data fetched successfully:", userData);
+            //console.log("User data fetched successfully:", userData);
         } else {
             storage.set("userData", JSON.stringify([]));
             console.log("No user data found, initializing with empty array.");
@@ -96,7 +99,7 @@ const ToDoList = ({ navigation }) => {
     useFocusEffect(
         useCallback(() => {
 
-            console.log("ToDoList screen focused, fetching data...");
+            //console.log("ToDoList screen focused, fetching data...");
             fetchData();
         }, [])
     )
