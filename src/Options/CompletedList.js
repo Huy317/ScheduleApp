@@ -35,6 +35,9 @@ const CompletedList = ({ navigation }) => {
         }, [])
     )
 
+    const getTextDisplay = () => {
+        return completedTasks.length === 0 ? { display: "flex" } : { display: "none" };
+    }
 
     const formatDate = (dateString) => {
         if (!dateString) return "";
@@ -45,6 +48,11 @@ const CompletedList = ({ navigation }) => {
         return date.toLocaleDateString(undefined, options);
     }
     const handleClearAll = () => {
+        if (completedTasks.length === 0) {
+            Alert.alert("No Completed Tasks", "There are no completed tasks to clear.");
+            return;
+        }
+
         Alert.alert("Clear All", "Are you sure you want to clear all completed tasks PERMANENTLY?", [
             {
                 text: "Clear",
@@ -74,7 +82,7 @@ const CompletedList = ({ navigation }) => {
         navigation.navigate("Task Details", { todo: item });
     }
     const todoItem = (item) => {
-        let completedDate = item.completedDate || "";
+        let completedDate = item.completedDate || "Haven't completed yet";
         return (
 
             <TouchableOpacity
@@ -94,6 +102,9 @@ const CompletedList = ({ navigation }) => {
             >
                 <Text style={styles.buttonText}>CLEAR ALL</Text>
             </TouchableOpacity>
+            <View style={[styles.center, getTextDisplay()]}>
+                <Text style={styles.noTaskText}>No tasks here yet :/</Text>
+            </View>
             <FlatList
                 data={completedTasks}
                 renderItem={({ item }) => todoItem(item)}
@@ -137,6 +148,17 @@ const styles = StyleSheet.create({
         color: "grey",
         textDecorationLine: "line-through"
     },
-
+    center:{
+        marginTop: 100,
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+    },
+    noTaskText: {
+        fontSize: 18,
+        color: "grey",
+        textAlign: "center",
+        marginTop: 20,
+    }
 
 })

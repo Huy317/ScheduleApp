@@ -96,6 +96,10 @@ const ToDoList = ({ navigation }) => {
         }
     }
 
+    const getTextDisplay = () => {
+        return data.length === 0 ? { display: "flex" } : { display: "none" };
+    }
+
     useFocusEffect(
         useCallback(() => {
 
@@ -109,6 +113,9 @@ const ToDoList = ({ navigation }) => {
 
 
         <View style={styles.container}>
+             <View style={[styles.center, getTextDisplay()]}>
+                            <Text style={styles.noTaskText}>No tasks here yet :/</Text>
+                        </View>
             <FlatList
                 data={data}
                 renderItem={({ item }) => todoItem(item)}
@@ -158,6 +165,18 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 15,
         minWidth: 80
+    },
+    center: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        marginTop: 100,
+    },
+    noTaskText: {
+        fontSize: 18,
+        color: "grey",
+        textAlign: "center",
+        marginTop: 20,
     }
 
 })

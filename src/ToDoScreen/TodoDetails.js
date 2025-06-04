@@ -38,7 +38,9 @@ const getArchivedDisplay = (archived) => {
 const getArchviedText = (archived) => {
     return archived?"DELETE":"ARCHIVE";
 }
-
+const getTitleDoneStyle = (done) =>{
+    return done? { textDecorationLine: "line-through", color: "gray" } : {};
+}
 const TodoDetails = ({ route, navigation }) => {
     const { todo } = route.params;
 
@@ -143,7 +145,7 @@ const TodoDetails = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{todo.title}</Text>
+            <Text style={[styles.title,getTitleDoneStyle(todo.done)]}>{todo.title}</Text>
             <Text style={styles.label}>Description:<Text style={{ fontWeight: "normal" }}>{todo.description}</Text> </Text>
             <Text style={styles.label}>Deadline: <Text style={{ fontWeight: "normal" }}>{todo.date}</Text> </Text>
             <Text style={[getDoneDisplay(todo.done), { fontWeight: "bold" }]}>Completed date: <Text style={{ fontWeight: "normal" }}>{todo.completedDate}</Text></Text>
