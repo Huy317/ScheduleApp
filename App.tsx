@@ -14,6 +14,8 @@ import Icon from '@react-native-vector-icons/material-design-icons';
 import ForgotPassword from './src/Options/ForgotPassword';
 import CompletedList from './src/Options/CompletedList';
 import ResetPassword from './src/Options/ResetPassword';
+import CalendarPage from './src/Calendar/Calendar';
+
 
 const Stack = createStackNavigator();
 const TodoScreen = () => {
@@ -52,7 +54,7 @@ const TodoScreen = () => {
 }
 
 const OptionsScreen = () => {
-  return(
+  return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
@@ -64,7 +66,7 @@ const OptionsScreen = () => {
         },
       }}
     >
-      <Stack.Screen name="Options" component={Options}/>
+      <Stack.Screen name="Options" component={Options} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Regsiter} />
       <Stack.Screen name="Forgot Password" component={ForgotPassword} />
@@ -75,14 +77,33 @@ const OptionsScreen = () => {
   )
 }
 
+const CalendarScreen = () => {
+  return (
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle:{
+            backgroundColor: '#7F55B1',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle:{
+            fontWeight: 'bold',
+          }
+        }}
+        >
+
+          <Stack.Screen name="Calendar" component={CalendarPage}/>
+        </Stack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 
 const MainTabNavigator = () => {
-  return(
+  return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        
+      screenOptions={({ route }) => ({
+
         headerShown: false,
         tabBarStyle: {
           backgroundColor: '#7F55B1',
@@ -97,15 +118,19 @@ const MainTabNavigator = () => {
             iconName = focused ? 'clipboard-list' : 'clipboard-list-outline';
           } else if (route.name === 'OptionsTab') {
             iconName = focused ? 'cog' : 'cog-outline';
+          }else if (route.name === 'CalendarTab'){
+            iconName = focused ? 'calendar' : 'calendar-outline';
           }
-          
+
 
           return <Icon name={iconName} size={size} color={color} />;
         }
       })}
     >
-      <Tab.Screen name="TaskListTab" component={TodoScreen} options={{title:"Task List"}}/>
-      <Tab.Screen name="OptionsTab" component={OptionsScreen} options={{title:"Options"}} />
+      <Tab.Screen name="TaskListTab" component={TodoScreen} options={{ title: "Task List" }} />
+      <Tab.Screen name="CalendarTab" component={CalendarScreen} options={{title:"Calendar"}} />
+      <Tab.Screen name="OptionsTab" component={OptionsScreen} options={{ title: "Options" }} />
+      
     </Tab.Navigator>
   )
 }
