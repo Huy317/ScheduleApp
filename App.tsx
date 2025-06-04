@@ -15,6 +15,7 @@ import ForgotPassword from './src/Options/ForgotPassword';
 import CompletedList from './src/Options/CompletedList';
 import ResetPassword from './src/Options/ResetPassword';
 import CalendarPage from './src/Calendar/Calendar';
+import TasksInDay from './src/Calendar/TasksInDay';
 
 
 const Stack = createStackNavigator();
@@ -92,6 +93,8 @@ const CalendarScreen = () => {
         >
 
           <Stack.Screen name="Calendar" component={CalendarPage}/>
+          <Stack.Screen name="Tasks Today" component={TasksInDay} />
+          <Stack.Screen name="Task Details" component={TodoDetails} />
         </Stack.Navigator>
   )
 }

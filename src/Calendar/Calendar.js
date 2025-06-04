@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { CalendarList,Calendar } from "react-native-calendars";
+import { Modal, StyleSheet, Text, View } from "react-native";
+import { CalendarList, Calendar } from "react-native-calendars";
 import { storage } from "../storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { MenuProvider } from "react-native-popup-menu";
 
-const getPriorityColor = (priority) =>{
+const getPriorityColor = (priority) => {
     switch (priority) {
         case "urgent":
             return "red";
@@ -13,26 +14,24 @@ const getPriorityColor = (priority) =>{
         case "low":
             return "green";
         default:
-            return "gray"; 
+            return "gray";
     }
 }
-const CalendarPage = () => {
+const CalendarPage = ({navigation}) => {
     const [markedDates, setMarkedDates] = useState({});
 
     const fetchData = () => {
         let userData = storage.getString("userData");
-        if (userData){
+        if (userData) {
             userData = JSON.parse(userData);
             let marked = {};
             userData.forEach(item => {
                 if (item.date) {
                     let dateString = item.date.split('T')[0]; // Format date to YYYY-MM-DD
-                    
-                    if (!item.done && !item.archived){
+                    if (!item.done && !item.archived) {
                         let dots = marked[dateString]?.dots || [];
-                        dots.push({key:item.id,color:getPriorityColor(item.priority)});
-                        marked[dateString] = {dots};
-                        console.log(marked);
+                        dots.push({ key: item.id, color: getPriorityColor(item.priority) });
+                        marked[dateString] = { dots };
                     }
                 }
             });
@@ -41,19 +40,20 @@ const CalendarPage = () => {
     }
 
     useFocusEffect(
-        useCallback(()=>{
+        useCallback(() => {
             fetchData();
-        },[])
+        }, [])
     );
 
     const handleDayPress = (day) => {
-        console.log("Selected day:", day);
-        
+        // check if the day has any tasks
+        if (markedDates[day.dateString]) {
+            navigation.navigate("Tasks Today", {date: day.dateString});
+        }
     }
 
-    return(
+    return (
         <View style={styles.container}>
-            
             <CalendarList
                 markingType={'multi-dot'}
                 initialData={new Date().toDateString}
@@ -62,6 +62,7 @@ const CalendarPage = () => {
                 onDayPress={handleDayPress}
                 markedDates={markedDates}
             />
+
         </View>
     )
 }
@@ -69,8 +70,8 @@ const CalendarPage = () => {
 export default CalendarPage;
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        
+
     }
 })
