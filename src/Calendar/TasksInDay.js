@@ -38,7 +38,6 @@ const TasksInDay = ({route, navigation}) => {
         }
     }
     const handleTaskPress = (item) => {
-        console.log("Task pressed:", item);
         navigation.navigate("Task Details", { todo: item });
     }
     const TaskItem = ({item}) => {
