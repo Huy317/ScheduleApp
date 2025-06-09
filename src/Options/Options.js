@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-gesture-handler";
+import { storage } from "../storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Options = ({navigation}) => {
-    let isLoggedIn = false;
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
     const getDisplayLogoutStyle = () => {
         return isLoggedIn ? {} : { display: "none" };
     }
@@ -12,6 +15,8 @@ const Options = ({navigation}) => {
     }
     const handleLogout = () => {
         // Logic to handle logout
+        storage.delete("user");
+        setIsLoggedIn(false); // Update the login state
         console.log("User logged out");
     }
     const handleLogin = () => {
@@ -21,6 +26,19 @@ const Options = ({navigation}) => {
         // Logic to handle completed tasks history
         navigation.navigate("Completed Tasks");
     }
+
+    useFocusEffect(
+        useCallback(()=>{
+            
+            // Check if user is logged in
+            const user = storage.getString("user");
+            if (user) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        },[])
+    )
 
     return (
         <View style={styles.container}>

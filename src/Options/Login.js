@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
 } from "react-native";
+import { storage } from "../storage";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ const Login = ({ navigation }) => {
     }
     console.log("Login attempted with:", { email, password });
 
-    fetch("http://localhost:5000/api/auth/login", {
+    fetch("http://10.0.2.2:5000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,6 +50,7 @@ const Login = ({ navigation }) => {
 
         Alert.alert("Login success");
       })
+      
       .catch((error) => {
         console.log(error);
       });

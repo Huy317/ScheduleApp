@@ -17,7 +17,7 @@ const ForgotPassword = ({ navigation }) => {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/forgot-password", {
+    fetch("http://10.0.2.2:5000/api/auth/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

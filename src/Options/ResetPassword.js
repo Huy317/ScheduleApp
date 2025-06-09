@@ -8,12 +8,12 @@ import {
   View,
 } from "react-native";
 
-const ResetPassword = ({ navigation, email }) => {
+const ResetPassword = ({ route, navigation }) => {
   const [resetCode, setResetCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const email = navigation.getParam("email", "");
-
+  const email = route.params?.email || "";
+  console.log("Email from route params:", email);
   const handleResetPassword = () => {
     if (
       resetCode.trim() === "" ||
@@ -32,7 +32,7 @@ const ResetPassword = ({ navigation, email }) => {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/forgot-password", {
+    fetch("http://10.0.2.2:5000/api/auth/forgot-password", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

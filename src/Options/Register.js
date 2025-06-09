@@ -31,7 +31,9 @@ const Regsiter = ({ navigation }) => {
       return;
     }
 
-    fetch("http://localhost:5000/api/auth/register", {
+    // http://localhost:5000/api/auth/register
+
+    fetch("http://10.0.2.2:5000/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +43,13 @@ const Regsiter = ({ navigation }) => {
         password: password,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        console.log("Response status:", response.json());
+        return response.json();
+      })
       .then((data) => {
         console.log(data);
         if (data.errors) {
@@ -57,7 +65,7 @@ const Regsiter = ({ navigation }) => {
       .catch((error) => {
         console.log(error);
       });
-    console.log("Registration successful with:", { email, password });
+    // console.log("Registration successful with:", { email, password });
 
     setEmail("");
     setPassword("");
